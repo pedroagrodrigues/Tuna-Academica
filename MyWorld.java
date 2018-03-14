@@ -16,6 +16,17 @@ public class MyWorld extends World
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(800, 600, 1);
+        colocaObjectos();
+    }
+    
+    /**
+     *  Método Para Posicionar Objectos no Mundo
+     */
+    
+    public void colocaObjectos()
+    {
+        // Adicionar "Division" no Centro do Mundo
+        addObject(new Division(), 400, 300);
     }
 }
