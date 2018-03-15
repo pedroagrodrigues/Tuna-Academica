@@ -1,33 +1,24 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-/**
- * Write a description of class Division here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Division extends Actor
-{
+public class Division extends Actor{
+    /**
+     * Constructor defines the shape of the wall
+     *
+     **/
+    public Division(int worldHeight) //recieve worldHeight because we cant use getWorld() since the object is being created 
+    {
+        /**Placing a wall in the center of the world creating a division between both players*/
+        getImage().scale(getImage().getWidth()/2, worldHeight);
+    }
     /**
      * Act - do whatever the Division wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    public void act() 
-    {
+    public void act(){
         
     }   
-    
     /**
-     * Método Para "Comprimir" de Maneira a ter uma Divisão Adequeada
+     * Placing a wall in the center of the world creating a division between players
      */
-    
- 
-    public Division() //fazer uma imagem que se parece mais com uma barreira fina
-    {
-        //imageBrick = getImage();
-        //int larguraAtual = imageBrick.getWidth();
-        //int alturaAtual = imageBrick.getHeight();
-        // int height = getWorld().getHeight() - 100;
-        getImage().scale(getImage().getWidth()/6, 600); // Falar com a prof de maneira a obter a altura do mundo
-    }
+   
 }
