@@ -20,11 +20,14 @@ public class StartMenu extends World
         super((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/3,
         (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
         
-       objectSpawn();
+        objectSpawn();
     }
     
     private void objectSpawn(){
-        addObject(new Button(), getWidth()/2, getHeight()/2);
-        showText("Player One",getWidth()/2, getHeight()/2);
+        addObject(new Button(0), getWidth()/2, getHeight()/2-50);
+        showText("One Player",getWidth()/2, getHeight()/2-50);
+        addObject(new Button(1), getWidth()/2, getHeight()/2+50);
+        showText("Two Players",getWidth()/2, getHeight()/2+50);
+        addObject(new Button(2), getWidth()/30, getHeight()-getHeight()/30);
     }
 }

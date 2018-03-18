@@ -16,7 +16,7 @@ public class TwoPlayers extends World
         //Create a world that is half of the screen size, dynamic for every screen (TO TEST)
         super((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/3,
         (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
-              
+        
         //Debug
         //System.out.println("Debug: World Dimensiions = (" + getWidth()+","+ getHeight()+")");
       
