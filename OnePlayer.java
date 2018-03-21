@@ -12,6 +12,7 @@ public class OnePlayer extends World
     //Variable where we save the possible object spawn in the game
     private double[] spawnPositionX;
     private int increment = 0; //variable to set distance between objects
+    private int score;
     /**
      * Constructor for objects of class OnePlayer.
      * 
@@ -28,9 +29,15 @@ public class OnePlayer extends World
         }
         Greenfoot.setSpeed(50);
         
+        // mostrar o score 
+        score = 0;
+        showText("Score: " +score, (getWidth()/10)+10,getHeight()-getHeight()/99);
+        
+        // timer
     }
     
     public void act(){
+
         if (increment == 50){
             spawnObstacle();
             //spawnBonus();
@@ -53,6 +60,12 @@ public class OnePlayer extends World
             addObject(new Instrument(), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
         }
     }
+    
+    public void sumPoints(int points){
+        score = score + points;
+        showText("Score: " +score, (getWidth()/10)+10,getHeight()-getHeight()/99);
+    }
+
 }
 
 //  spawnPositionX[i] = (int)((getWidth() *(i+i+1))/8);
