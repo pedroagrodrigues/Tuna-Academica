@@ -60,15 +60,15 @@ public class OnePlayer extends World
     
     private void spawnObstacle(){
         for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
-            if( Greenfoot.getRandomNumber(100)+1 <= 50){
-                addObject(new Obstacle(), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
+            if( Greenfoot.getRandomNumber(100) < 40){
+                addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
             }
         } 
     }
    
     private void spawnInstrument(){
-        if( Greenfoot.getRandomNumber(100)+1 <= 15){
-            addObject(new Instrument(), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
+        if( Greenfoot.getRandomNumber(100) < 20){
+            addObject(new Instrument(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
         }
     }
    

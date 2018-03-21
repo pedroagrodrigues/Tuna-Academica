@@ -14,19 +14,21 @@ public class Button extends Actor
     /**
      * Button constructor defines the button acordingly with the type recieved
      */
-    public Button(int type){
+    public Button(int type, double worldHeight){
         switch (type){
             case 0:
-                setImage(new GreenfootImage("button.png"));
+                setImage(new GreenfootImage("oneButton.png"));
+                getImage().scale((int)(worldHeight/4),(int) (worldHeight/6));
                 world = new OnePlayer();
                 break;
             case 1:
                 world = new TwoPlayers();
-                setImage(new GreenfootImage("button.png"));
+                setImage(new GreenfootImage("twoButton.png"));
+                getImage().scale((int)(worldHeight/4),(int) (worldHeight/6));
                 break;
             case 2:
-                 setImage(new GreenfootImage("exit.png"));
-                 getImage().scale(50,50);      
+                 setImage(new GreenfootImage("exitButton.png"));
+                 getImage().scale((int)(worldHeight/7),(int) (worldHeight/7));      
                 break;
                 
         }

@@ -26,10 +26,8 @@ public class StartMenu extends World
      * Places clickable buttons in the world.
      */
     private void objectSpawn(){
-        addObject(new Button(0), getWidth()/2, getHeight()/2-50);
-        showText("One Player",getWidth()/2, getHeight()/2-50);
-        addObject(new Button(1), getWidth()/2, getHeight()/2+50);
-        showText("Two Players",getWidth()/2, getHeight()/2+50);
-        addObject(new Button(2), getWidth()/30, getHeight()-getHeight()/30);
+        addObject(new Button(0, getHeight()), (int)(getWidth()/3), (int)(getHeight()/2.5));
+        addObject(new Button(1, getHeight()), (int) (getWidth()*2/3), (int)(getHeight()/2.5));
+        addObject(new Button(2, getHeight()), (int) (getWidth()/2), (int)(getHeight()-getHeight()/3));
     }
 }
