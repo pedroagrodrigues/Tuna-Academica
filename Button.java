@@ -8,9 +8,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Button extends Actor
 {
-    private World world;
+    private World world; //saves the world the button should call
+    private boolean mouseOver = false; //checks if the mouse is over the button
+    
     /**
-     * Button constructor
+     * Button constructor defines the button acordingly with the type recieved
      */
     public Button(int type){
         switch (type){
@@ -23,9 +25,8 @@ public class Button extends Actor
                 setImage(new GreenfootImage("button.png"));
                 break;
             case 2:
-                setImage(new GreenfootImage("exit.png"));
-                getImage().scale(50,50);
-                
+                 setImage(new GreenfootImage("exit.png"));
+                 getImage().scale(50,50);      
                 break;
                 
         }
@@ -39,8 +40,21 @@ public class Button extends Actor
      */
     public void act() 
     {
+        //Makes the button size to scale down to 90% of it's size
+        if(Greenfoot.mouseMoved(this) && !mouseOver){
+            getImage().scale(getImage().getWidth()*90/100, getImage().getHeight()*90/100);
+            mouseOver = true;
+        }            
+        //calls the world if button is clicked
         if(Greenfoot.mouseClicked(this))
             placeWorld();
+        //make the button to get back to it's original size   
+        if(Greenfoot.mouseMoved(null) && !Greenfoot.mouseMoved(this) && mouseOver){
+            getImage().scale(getImage().getWidth()*100/90,getImage().getHeight()*100/90);
+            mouseOver = false;
+        }
+        
+        
     }    
     /**
      * This funcion defines the funcion of the button

@@ -13,15 +13,9 @@ public class TwoPlayers extends World
      //Dimension windowSize = window.getSize();
     public TwoPlayers()
     {    
-        //Create a world that is half of the screen size, dynamic for every screen (TO TEST)
+        //Create a world that is half of the screen size, dynamic for every screen
         super((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/3,
         (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
-        
-        //Debug
-        //System.out.println("Debug: World Dimensiions = (" + getWidth()+","+ getHeight()+")");
-      
-        
-        //super(Dimension.window.getSize().getWidth(), GraphicsConfiguration.getBounds().getWidth(), 1);
         objectSpawn();
     }
     
@@ -29,9 +23,8 @@ public class TwoPlayers extends World
      *  Método Para Posicionar Objectos no Mundo
      */
  
-    public void objectSpawn()
-    {
+    public void objectSpawn(){
         // Adicionar "Division" no Centro do Mundo
-        addObject(new Division(getHeight()), getWidth()/2, getHeight()/2);
+        addObject(new UIBar(getHeight()), getWidth()/2, getHeight()/2);
     }
 }
