@@ -8,13 +8,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Button extends Actor
 {
-    private World world; //saves the world the button should call
-    private boolean mouseOver = false; //checks if the mouse is over the button
+    // Declaração de Variáveis
+    private World world; // Guarda o Mundo Da Opção Selecionada.
+    private boolean mouseOver = false; //Verefica Se o "Rato" está num dos Botões/Opções do Menu.
     
     /**
-     * Button constructor defines the button acordingly with the type recieved
+     * Construtor Menu: Define cada "Opção" de Acordo com Tipo de Dados  Recebido.
      */
-    public Button(int type, double worldHeight){
+    public Button(int type, double worldHeight)
+    {
         switch (type){
             case 0:
                 setImage(new GreenfootImage("oneButton.png"));
@@ -35,33 +37,33 @@ public class Button extends Actor
       
     }
    
-    
     /**
      * Act - do whatever the Button wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() 
     {
-        //Makes the button size to scale down to 90% of it's size
+        // Reajusta Tamanho da Opção para 90% do Seu Tamanho Original.
         if(Greenfoot.mouseMoved(this) && !mouseOver){
             getImage().scale(getImage().getWidth()*90/100, getImage().getHeight()*90/100);
             mouseOver = true;
         }            
-        //calls the world if button is clicked
+        // Chama o Mundo se a Opção Foi Selecionada.
         if(Greenfoot.mouseClicked(this))
             placeWorld();
-        //make the button to get back to it's original size   
+        // Faz Opção Retroceder/ Voltar ao Tamanho Original.
         if(Greenfoot.mouseMoved(null) && !Greenfoot.mouseMoved(this) && mouseOver){
             getImage().scale(getImage().getWidth()*100/90,getImage().getHeight()*100/90);
             mouseOver = false;
         }
-        
-        
-    }    
+ 
+    }
+    
     /**
-     * This funcion defines the funcion of the button
+     * Método Criado Para Definir a Função de Cada Opção Do Menu.
      */
-    private void placeWorld(){
+    private void placeWorld()
+    {
         if(world != null){
             Greenfoot.setWorld(world);
         }

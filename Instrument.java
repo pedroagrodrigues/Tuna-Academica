@@ -8,17 +8,31 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Instrument extends Actor
 {
+    // Declaração de Variáveis
     
     /**
-     * Constructor creates the instrument to be placed in the world
+     * Método que Cria um Instrumento a Ser Colocado no Mundo.
      */
-    public Instrument(int worldWidth){
+    public Instrument(int worldWidth)
+    {
         defineInstrument(setType(), worldWidth);
     }
-    /**
-     * Creates instruments: sets images and score
+    
+     /**
+     * Act - do whatever the Instrument wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    private void defineInstrument(int type, int worldWidth){
+    public void act() 
+    {
+       setLocation(getX(), getY() + 2);
+       destroyInstrument();
+    }
+    
+    /**
+     * Criação Instrumentos: Definição de Imagem e Pontuação.
+     */
+    private void defineInstrument(int type, int worldWidth)
+    {
         switch (type){
             case 1: 
                 setImage(new GreenfootImage("Guitar.png"));
@@ -41,9 +55,10 @@ public class Instrument extends Actor
     }
     
     /**
-     * Sets the probability of each type of instrument
+     * Método que Define a Probalidade para Cada Tipo De Instrumento Criado.
      */
-    private int setType(){
+    private int setType()
+    {
         int result = Greenfoot.getRandomNumber(100);
         if (result < 25) result = 1;
         else if (result > 25 && result < 50) result = 2;
@@ -51,19 +66,12 @@ public class Instrument extends Actor
         else result = 4;
         return result;
     }
-     /**
-     * Act - do whatever the Instrument wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act() 
-    {
-       setLocation(getX(), getY() + 2);
-       destroyInstrument();
-    }    
+    
     /**
-     * Instrument got to the end of the world
+     * Eliminação do Instrumento no Fim do Mundo, e Eliminação de Sobreposições Entre Intrumentos.
      */
-    private void  destroyInstrument(){
+    private void destroyInstrument()
+    {
         if (getY() == getWorld().getHeight()-1 || isTouching(Instrument.class))
             getWorld().removeObject(this);
         

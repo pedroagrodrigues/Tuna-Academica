@@ -9,17 +9,31 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Obstacle extends Actor
 {
-    
+    // Declaração de Variáveis
+
     /**
-     * Constructor creates the instrument to be placed in the world
+     * Construtor: Cria Os Obstáculos a Serem Colocados no Mundo.
      */
-    public Obstacle(int worldWidth){
+    public Obstacle(int worldWidth)
+    {
         defineObstacle(setType(), worldWidth);
     }
-    /**
-     * Creates instruments: sets images and score
+    
+     /**
+     * Act - do whatever the Obstacle wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    private void defineObstacle(int type, int worldWidth){
+    public void act() 
+    {
+       setLocation(getX(), getY() + 2);
+       destroyObstacle();
+    }
+    
+    /**
+     * Criação Obstáculo: Definição de Imagem e Pontuação.
+     */
+    private void defineObstacle(int type, int worldWidth)
+    {
         switch (type){
             case 1: 
                 setImage(new GreenfootImage("Box.png"));
@@ -38,25 +52,22 @@ public class Obstacle extends Actor
     }
     
     /**
-     * Sets the probability of each type of instrument
+     *  Método que Define a Probalidade para Cada Tipo De Obstáculo Criado.
      */
-    private int setType(){
+    private int setType()
+    {
         int result = Greenfoot.getRandomNumber(100);
         if (result < 25) result = 1;
         else if (result > 25 && result < 50) result = 2;
              else result = 3;
         return result;
     }
+    
     /**
-     * Act - do whatever the Obstacle wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Eliminação do Obstáculo no Fim do Mundo, e Eliminação de Sobreposições Entre Intrumentos e Obstáculos.
      */
-    public void act() 
+    private void destroyObstacle()
     {
-       setLocation(getX(), getY() + 2);
-       destroyInstrument();
-    }    
-    private void  destroyInstrument(){
         if (getY() == getWorld().getHeight()-1 || isTouching(Instrument.class) || isTouching(Obstacle.class))
             getWorld().removeObject(this);
     }

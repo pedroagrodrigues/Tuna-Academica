@@ -9,13 +9,14 @@ import java.awt.Dimension;
  */
 public class StartMenu extends World
 {
-
+    // Declaração de Variáveis
+    
     /**
-     * Constructor for objects of class StartMenu.
+     * Constructor Para Objectos da Classe StartMenu.
      */
     public StartMenu()
     {    
-        //Sets the super size acordingly with the screen resolution
+       // Define o Tamanho do super de Acordo com a Resolução do Ecrã.
         super((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/3,
         (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
         
@@ -23,9 +24,10 @@ public class StartMenu extends World
     }
     
     /**
-     * Places clickable buttons in the world.
+     * Posiciona Opções "Clicáveis" no Mundo.
      */
-    private void objectSpawn(){
+    private void objectSpawn()
+    {
         addObject(new Button(0, getHeight()), (int)(getWidth()/3), (int)(getHeight()/2.5));
         addObject(new Button(1, getHeight()), (int) (getWidth()*2/3), (int)(getHeight()/2.5));
         addObject(new Button(2, getHeight()), (int) (getWidth()/2), (int)(getHeight()-getHeight()/3));
