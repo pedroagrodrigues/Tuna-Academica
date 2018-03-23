@@ -93,7 +93,7 @@ public class OnePlayer extends World
      */
     public void playerCriation()
     {
-        Player player1 = new Player();
+        Player player1 = new Player(getWidth());
         addObject(player1, getWidth()/2, getHeight() - 50);
     }
     
