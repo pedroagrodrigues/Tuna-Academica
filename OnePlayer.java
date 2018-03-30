@@ -4,15 +4,16 @@ import java.awt.Dimension;
 /**
  * Write a description of class OnePlayer here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
  */
 public class OnePlayer extends World
 {
     // Declaração de Variáveis
     private double[] spawnPositionX = new double[4]; // Variável Onde Guarda Possivel Quantidade de Objectos no Jogo.
     private int increment = 0; // Variavel Para Estabelecer uma Distância Entre Objectos.
-    
+    private int type; //Tipo de Instrumento
+    private GreenfootImage background = new GreenfootImage("Floor.png");
+    private GreenfootImage background2 = new GreenfootImage("Floor2.png");
+    private int imageCount;
     /**
      * Constructor Para Objectos da Classe OnePlayer.
      */
@@ -21,9 +22,10 @@ public class OnePlayer extends World
         // Define o Tamanho do super de Acordo com a Resolução do Ecrã.
         super((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/6),
             (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
-            
+        //Desenha o fundo
+        getBackground().drawImage(background, 0, 0);    
         // Prioridade dos Objectos.    
-        setPaintOrder(UIBar.class, Obstacle.class, Instrument.class);
+        setPaintOrder(UIBar.class, Obstacle.class, Instrument.class, Player.class);
        
         // Random da Coluna Para Colocação de Objectos.
         for (int i = 0; i < 4; i++){
@@ -38,8 +40,8 @@ public class OnePlayer extends World
         
         // Adicionar Player ao Mundo.
         playerCriation();
-    }
-    
+        
+    }  
     /**
      * This world act will make objects spawn on the top wich will then fall and interact with the player.
      */
@@ -52,8 +54,19 @@ public class OnePlayer extends World
             increment=0;
         }
         else increment++;
+        if (imageCount <= background.getHeight()) imageCount += 2;
+        else imageCount = 2;
+        moveBackground();
     }
-    
+    private void moveBackground(){
+        if (imageCount > background.getHeight()) {
+            imageCount += background.getHeight();
+        }
+        int temp = imageCount;
+        getBackground().drawImage(background2, 0, temp - 2);
+        getBackground().drawImage(background, 0, temp - background.getHeight()+1);
+        
+    }
     /**
      * Tipos de Objectos:
      *  objectSpawn() - Cria Interface Inicial Do Utilizador.
@@ -63,7 +76,8 @@ public class OnePlayer extends World
      */
     private void objectSpawn()
     {
-        addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 5); // Barra De Pontuação/Informação.
+        addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); // Barra De Pontuação/Informação.
+        //addObject(new Floor(getHeight()), getWidth()/2, getHeight()/2);
     }
     
     /**
@@ -72,29 +86,55 @@ public class OnePlayer extends World
     private void spawnObstacle()
     {
         for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
-            if( Greenfoot.getRandomNumber(100) < 40){
+            if(Greenfoot.getRandomNumber(100) < 40){
                 addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
             }
         } 
     }
-    
+    //-----------------------------------------------Secção dos Instrumentos---------------------------------
+    private void makeType(){
+        int rand = Greenfoot.getRandomNumber(100); // 0 - 99 
+        //var provisória utilizada só para fazer os cálculos 
+        //(podiamos utilizar a variável type para o mesmo efeito)
+        if (rand < 25) type = 1;
+        else if (rand > 25 && rand < 50) type = 2;
+            else if (rand > 50 && rand < 75) type = 3;
+        else type = 4;
+        //Neste momento todos os instrumentos têm 25% de probabilidade de serem criados.
+    }
     /**
-     * Método Para Criação De Instrumentos e Posicionamento Random, Nas Colunas do Mundo.
+     * spawnInstrument coloca os Instrumentos no mundo
      */
     private void spawnInstrument()
     {
-        if( Greenfoot.getRandomNumber(100) < 20){
-            addObject(new Instrument(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
-        }
+        for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
+            if(Greenfoot.getRandomNumber(100) < 40){
+                makeType();
+                switch(type) {
+                    case 1: 
+                        addObject(new GuitarOne(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);
+                        break;
+                    case 2: 
+                        addObject(new GuitarTwo(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);
+                        break;
+                    case 3: 
+                        addObject(new Maracas(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);
+                        break;  
+                    case 4: 
+                        addObject(new Castanets(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);
+                        break;
+                }
+            }
+        } 
+        
     }
-   
+    //-----------------------------------------Fim da secção Instrumentos------------------------------------------------
     /**
      * Método Para Criação do Player no Mundo.
      */
     public void playerCriation()
     {
         Player player1 = new Player(getWidth());
-        addObject(player1, getWidth()/2, getHeight() - 50);
+        addObject(player1, getWidth()/2, getHeight() - getHeight()/10);
     }
-    
 }

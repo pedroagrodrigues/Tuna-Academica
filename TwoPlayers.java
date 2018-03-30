@@ -23,6 +23,6 @@ public class TwoPlayers extends World
     public void objectSpawn()
     {
         // Adicionar "Barra" no Centro do Mundo.
-        addObject(new UIBar(getHeight()), getWidth()/2, getHeight()/2);
+        addObject(new UIBar(getHeight()), getWidth()/2, getHeight()-7);
     }
 }

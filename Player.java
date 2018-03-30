@@ -11,7 +11,7 @@ public class Player extends Actor
     // Declaração de Variáveis
     private final int DELTA = 5; // Descolamento do Player.
     private GreenfootImage imagemPlayer; // Variável Para Ajustamento do Tamanho do Player.
-    
+    private int animeCounter = 0; //conta interacções para fazer a animação 
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -20,8 +20,17 @@ public class Player extends Actor
     {
         checkKeyPress();
         playerInteraction();
+        animation();
     }
-    
+    /**
+     * animation(), anima o player
+     */
+    public void animation(){
+        if (animeCounter == 7){
+            animeCounter = 0;
+            getImage().mirrorHorizontally();
+        } else animeCounter++;
+    }
     /**
      * Constructor Para Objectos da Classe Player.
      */
@@ -47,19 +56,40 @@ public class Player extends Actor
      */
     private void playerInteraction()
     {
-        // Reprodução do Som De Instrumentos Capturados.
-        if (isTouching(Instrument.class))
+        //-----------------Instrumentos-----------------------
+        if (isTouching(GuitarOne.class))
         {
-            removeTouching(Instrument.class);
+            //addPoints(<quantidade de pontos>);
+            removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
         }
+         if (isTouching(GuitarTwo.class))
+        {
+            //addPoints(<quantidade de pontos>);
+            removeTouching(GuitarTwo.class);
+            Greenfoot.playSound("instrument.wav");
+        }
+         if (isTouching(Castanets.class))
+        {
+            //addPoints(<quantidade de pontos>);
+            removeTouching(Castanets.class);
+            Greenfoot.playSound("instrument.wav");
+        }
+         if (isTouching(Maracas.class))
+        {
+            //addPoints(<quantidade de pontos>);
+            removeTouching(Maracas.class);
+            Greenfoot.playSound("instrument.wav");
+        }
+        //------------Fim Instrumentos-----------------------        
+        
         
         //Reprodução Som de Obstáculo Capturado (Game Over).
         if (isTouching(Obstacle.class))
         {
-            Greenfoot.playSound("noo.wav");
+            //Greenfoot.playSound("noo.wav");
             getWorld().removeObject(this);
-            Greenfoot.stop();
+            //Greenfoot.stop();
         }
     }
 
