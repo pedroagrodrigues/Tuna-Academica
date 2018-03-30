@@ -12,8 +12,8 @@ public class OnePlayer extends World
     private int increment = 0; // Variavel Para Estabelecer uma Distância Entre Objectos.
     private int type; //Tipo de Instrumento
     private GreenfootImage background = new GreenfootImage("Floor.png");
-    private GreenfootImage background2 = new GreenfootImage("Floor2.png");
-    private int imageCount;
+    private int imageCount = 0;
+    private int imageCount2 = background.getHeight();
     /**
      * Constructor Para Objectos da Classe OnePlayer.
      */
@@ -54,17 +54,29 @@ public class OnePlayer extends World
             increment=0;
         }
         else increment++;
-        if (imageCount <= background.getHeight()) imageCount += 2;
-        else imageCount = 2;
+        imageIncrement();
         moveBackground();
     }
-    private void moveBackground(){
-        if (imageCount > background.getHeight()) {
-            imageCount += background.getHeight();
+    private void imageIncrement(){ 
+        if (imageCount < background.getHeight()){
+            imageCount += 2;
         }
-        int temp = imageCount;
-        getBackground().drawImage(background2, 0, temp - 2);
-        getBackground().drawImage(background, 0, temp - background.getHeight()+1);
+        else {
+            imageCount = -background.getHeight()+2;
+            //imageCount2 = background.getHeight() - getHeight();
+        }
+        if (imageCount2 < background.getHeight()){
+            imageCount2 += 2;
+        }
+        else {
+            imageCount2 = -background.getHeight()+2;
+            //imageCount2 = background.getHeight() - getHeight();
+        }
+    }
+    private void moveBackground(){
+        System.out.println("imageCount1 = " + imageCount + " imageCount2 =  " + imageCount2 + " Size: " + background.getHeight());
+        getBackground().drawImage(background, 0, imageCount);
+        getBackground().drawImage(background, 0, imageCount2);
         
     }
     /**

@@ -26,7 +26,7 @@ public class Player extends Actor
      * animation(), anima o player
      */
     public void animation(){
-        if (animeCounter == 7){
+        if (animeCounter == 10){
             animeCounter = 0;
             getImage().mirrorHorizontally();
         } else animeCounter++;
