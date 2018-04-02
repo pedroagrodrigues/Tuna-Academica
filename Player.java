@@ -12,6 +12,30 @@ public class Player extends Actor
     private final int DELTA = 5; // Descolamento do Player.
     private GreenfootImage imagemPlayer; // Variável Para Ajustamento do Tamanho do Player.
     private int animeCounter = 0; //conta interacções para fazer a animação 
+    private String playerL, playerR;
+    private int type;
+    /**
+     * Constructor Para Objectos da Classe Player.
+     */
+    public Player(int worldHeight, int type){
+        // Manipulação da Imagem Player Para Um Formato Mais Adequado.
+        getImage().scale(worldHeight/15, worldHeight/9);
+        this.type = type;
+        keyDefine();
+    }
+    
+    private void keyDefine(){
+         if (type == 1){
+            playerL = "A";
+            playerR = "D";
+        }
+        else{
+            playerL = "J";
+            playerR = "L";
+        }
+        
+    }
+    
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -26,29 +50,21 @@ public class Player extends Actor
      * animation(), anima o player
      */
     public void animation(){
-        if (animeCounter == 10){
+        if (animeCounter == 9){
             animeCounter = 0;
             getImage().mirrorHorizontally();
         } else animeCounter++;
     }
-    /**
-     * Constructor Para Objectos da Classe Player.
-     */
-    public Player(int worldWidth)
-    {
-        // Manipulação da Imagem Player Para Um Formato Mais Adequado.
-        getImage().scale(worldWidth/6, worldWidth/3);
-    }
+    
     
     /**
      * Método Para Movimentações do Player.
      */
-    private void checkKeyPress()
-    {
-     if(Greenfoot.isKeyDown("Left"))
-        setLocation(getX()-DELTA, getY());
-     if(Greenfoot.isKeyDown("Right"))
-        setLocation(getX()+DELTA, getY());
+    private void checkKeyPress(){
+         if(Greenfoot.isKeyDown(playerL))
+            if((!isTouching(Barrier.class) && type == 2) || type == 1) setLocation(getX()-DELTA, getY());
+         if(Greenfoot.isKeyDown(playerR))
+            if((!isTouching(Barrier.class) && type == 1) || type == 2) setLocation(getX()+DELTA, getY());
     }
     
     /**

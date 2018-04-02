@@ -1,6 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.Toolkit;   //(Screensize and Dimensions)
+import java.awt.Toolkit;   //Toolkit e Dimension obtem a resoluçao do ecran
 import java.awt.Dimension;
+import java.awt.Color;
 /**
  * Write a description of class OnePlayer here.
  * 
@@ -15,6 +16,9 @@ public class OnePlayer extends World
     private int imageCount = 0;
     private int imageCount2 = background.getHeight();
     private int score; // Variável Para somar pontos. 
+    private int speed, level = 50;
+   
+    
     /**
      * Constructor Para Objectos da Classe OnePlayer.
      */
@@ -28,23 +32,20 @@ public class OnePlayer extends World
         // Prioridade dos Objectos.    
         setPaintOrder(UIBar.class, Obstacle.class, Instrument.class, Player.class);
        
-        // Random da Coluna Para Colocação de Objectos.
+        // Cria as posiçoes em X onde podem ser colocados objectos
         for (int i = 0; i < 4; i++){
           spawnPositionX[i] = ((getWidth() *(i+i+1))/8);
         }
+        //Speed inicial;
+        speed = 50;
         
-        // Atribuição De uma Velocidade Inicial "Standard" ao Mundo.
-        Greenfoot.setSpeed(50);
        
         // Alocação De Objectos no Estado Inicial do Mundo.
         objectSpawn();
         
-        // Adicionar Player ao Mundo.
-        playerCriation();
-        
-        // mostrar o score  
+        // mostrar o score 
         score = 0; 
-        showText("Score: " +score, (getWidth()/10)+30,getHeight()-getHeight()/99);          
+                 
                   
     }  
     /**
@@ -52,7 +53,9 @@ public class OnePlayer extends World
      */
     public void act()
     {
-        if (increment == 50){
+        // Velocidade do jogo
+        Greenfoot.setSpeed(speed);
+        if (increment == 100){
             spawnObstacle();
             //spawnBonus();
             spawnInstrument();
@@ -62,27 +65,26 @@ public class OnePlayer extends World
         imageIncrement();
         moveBackground();
     }
+    
     private void imageIncrement(){ 
         if (imageCount < background.getHeight()){
             imageCount += 2;
         }
         else {
-            imageCount = -background.getHeight()+2;
-            //imageCount2 = background.getHeight() - getHeight();
+            imageCount = -background.getHeight();
+           
         }
         if (imageCount2 < background.getHeight()){
             imageCount2 += 2;
         }
         else {
-            imageCount2 = -background.getHeight()+2;
-            //imageCount2 = background.getHeight() - getHeight();
+            imageCount2 = -background.getHeight();
+            
         }
     }
     private void moveBackground(){
-        System.out.println("imageCount1 = " + imageCount + " imageCount2 =  " + imageCount2 + " Size: " + background.getHeight());
         getBackground().drawImage(background, 0, imageCount);
-        getBackground().drawImage(background, 0, imageCount2);
-        
+        getBackground().drawImage(background, 0, imageCount2);  
     }
     /**
      * Tipos de Objectos:
@@ -94,7 +96,8 @@ public class OnePlayer extends World
     private void objectSpawn()
     {
         addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); // Barra De Pontuação/Informação.
-        //addObject(new Floor(getHeight()), getWidth()/2, getHeight()/2);
+        sumPoints(0); 
+        addObject(new Player(getHeight(), 1), getWidth()/2, getHeight() - getHeight()/10);
     }
     
     /**
@@ -103,7 +106,7 @@ public class OnePlayer extends World
     private void spawnObstacle()
     {
         for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
-            if(Greenfoot.getRandomNumber(100) < 40){
+            if(Greenfoot.getRandomNumber(100) < 70){
                 addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
             }
         } 
@@ -125,7 +128,7 @@ public class OnePlayer extends World
     private void spawnInstrument()
     {
         for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
-            if(Greenfoot.getRandomNumber(100) < 40){
+            if(Greenfoot.getRandomNumber(100) < 50){
                 makeType();
                 switch(type) {
                     case 1: 
@@ -146,20 +149,18 @@ public class OnePlayer extends World
         
     }
     //-----------------------------------------Fim da secção Instrumentos------------------------------------------------
-    /**
-     * Método Para Criação do Player no Mundo.
-     */
-    public void playerCriation()
-    {
-        Player player1 = new Player(getWidth());
-        addObject(player1, getWidth()/2, getHeight() - getHeight()/10);
-    }
+   
     
      /**
-     * Método Para somar pontos, ao apanhar instrumentos.
+     * sumPoints(int points) serve para somar pontos, ao apanhar instrumentos.
      */
-        public void sumPoints(int points){ 
-        score = score + points; 
-        showText("Score: " +score, (getWidth()/10)+10,getHeight()-getHeight()/99); 
+    public void sumPoints(int points){ 
+        score += points; 
+        String temp = "Score: " + score;      
+        showText(temp, getWidth()/4, getHeight()- 7); 
+        if (score >= level){
+              speed +=2;
+              level += 50;
+        }
     } 
 }
