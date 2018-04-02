@@ -59,25 +59,25 @@ public class Player extends Actor
         //-----------------Instrumentos-----------------------
         if (isTouching(GuitarOne.class))
         {
-            //addPoints(<quantidade de pontos>);
+            getWorldOfType(OnePlayer.class).sumPoints(20); 
             removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(GuitarTwo.class))
         {
-            //addPoints(<quantidade de pontos>);
+            getWorldOfType(OnePlayer.class).sumPoints(15); 
             removeTouching(GuitarTwo.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(Castanets.class))
         {
-            //addPoints(<quantidade de pontos>);
+            getWorldOfType(OnePlayer.class).sumPoints(10); 
             removeTouching(Castanets.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(Maracas.class))
         {
-            //addPoints(<quantidade de pontos>);
+            getWorldOfType(OnePlayer.class).sumPoints(5); 
             removeTouching(Maracas.class);
             Greenfoot.playSound("instrument.wav");
         }
@@ -87,9 +87,9 @@ public class Player extends Actor
         //Reprodução Som de Obstáculo Capturado (Game Over).
         if (isTouching(Obstacle.class))
         {
-            //Greenfoot.playSound("noo.wav");
+            Greenfoot.playSound("noo.wav");
             getWorld().removeObject(this);
-            //Greenfoot.stop();
+            Greenfoot.stop();
         }
     }
 

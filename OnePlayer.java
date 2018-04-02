@@ -14,6 +14,7 @@ public class OnePlayer extends World
     private GreenfootImage background = new GreenfootImage("Floor.png");
     private int imageCount = 0;
     private int imageCount2 = background.getHeight();
+    private int score; // Variável Para somar pontos. 
     /**
      * Constructor Para Objectos da Classe OnePlayer.
      */
@@ -41,6 +42,10 @@ public class OnePlayer extends World
         // Adicionar Player ao Mundo.
         playerCriation();
         
+        // mostrar o score  
+        score = 0; 
+        showText("Score: " +score, (getWidth()/10)+30,getHeight()-getHeight()/99);          
+                  
     }  
     /**
      * This world act will make objects spawn on the top wich will then fall and interact with the player.
@@ -149,4 +154,12 @@ public class OnePlayer extends World
         Player player1 = new Player(getWidth());
         addObject(player1, getWidth()/2, getHeight() - getHeight()/10);
     }
+    
+     /**
+     * Método Para somar pontos, ao apanhar instrumentos.
+     */
+        public void sumPoints(int points){ 
+        score = score + points; 
+        showText("Score: " +score, (getWidth()/10)+10,getHeight()-getHeight()/99); 
+    } 
 }
