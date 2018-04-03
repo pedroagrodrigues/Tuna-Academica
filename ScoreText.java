@@ -9,6 +9,7 @@ public class ScoreText extends Actor
         
     }
     
+    
     public void act(){
         
         text = "Score: " + getWorldOfType(OnePlayer.class).getScore();
