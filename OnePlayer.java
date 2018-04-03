@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Toolkit;   //Toolkit e Dimension obtem a resoluçao do ecran
 import java.awt.Dimension;
-import java.awt.Color;
+import java.awt.Font;
 /**
  * Write a description of class OnePlayer here.
  * 
@@ -15,7 +15,7 @@ public class OnePlayer extends World
     private GreenfootImage background = new GreenfootImage("Floor.png");
     private int imageCount = 0;
     private int imageCount2 = background.getHeight();
-    private int score; // Variável Para somar pontos. 
+    private int score = 0; // Variável Para somar pontos. 
     private int speed, level = 50;
    
     
@@ -30,7 +30,7 @@ public class OnePlayer extends World
         //Desenha o fundo
         getBackground().drawImage(background, 0, 0);    
         // Prioridade dos Objectos.    
-        setPaintOrder(UIBar.class, Obstacle.class, Instrument.class, Player.class);
+        setPaintOrder(ScoreText.class, UIBar.class, Obstacle.class, Instrument.class, Player.class);
        
         // Cria as posiçoes em X onde podem ser colocados objectos
         for (int i = 0; i < 4; i++){
@@ -42,11 +42,7 @@ public class OnePlayer extends World
        
         // Alocação De Objectos no Estado Inicial do Mundo.
         objectSpawn();
-        
-        // mostrar o score 
-        score = 0; 
-                 
-                  
+               
     }  
     /**
      * This world act will make objects spawn on the top wich will then fall and interact with the player.
@@ -96,7 +92,7 @@ public class OnePlayer extends World
     private void objectSpawn()
     {
         addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); // Barra De Pontuação/Informação.
-        sumPoints(0); 
+        addObject(new ScoreText(score), getWidth()/7, getHeight()- 5);
         addObject(new Player(getHeight(), 1), getWidth()/2, getHeight() - getHeight()/10);
     }
     
@@ -155,12 +151,13 @@ public class OnePlayer extends World
      * sumPoints(int points) serve para somar pontos, ao apanhar instrumentos.
      */
     public void sumPoints(int points){ 
-        score += points; 
-        String temp = "Score: " + score;      
-        showText(temp, getWidth()/4, getHeight()- 7); 
+        score += points;
         if (score >= level){
               speed +=2;
               level += 50;
         }
     } 
+    public int getScore(){
+        return score;
+    }
 }
