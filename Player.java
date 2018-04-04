@@ -21,7 +21,7 @@ public class Player extends Actor
         // Manipulação da Imagem Player Para Um Formato Mais Adequado.
         getImage().scale(worldHeight/15, worldHeight/9);
         this.type = type;
-        keyDefine();
+        keyDefine();        
     }
     
     private void keyDefine(){
@@ -75,25 +75,25 @@ public class Player extends Actor
         //-----------------Instrumentos-----------------------
         if (isTouching(GuitarOne.class))
         {
-            getWorldOfType(OnePlayer.class).sumPoints(20); 
+            //getWorldOfType(OnePlayer.class).sumPoints(20); 
             removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(GuitarTwo.class))
         {
-            getWorldOfType(OnePlayer.class).sumPoints(15); 
+            //getWorldOfType(OnePlayer.class).sumPoints(15); 
             removeTouching(GuitarTwo.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(Castanets.class))
         {
-            getWorldOfType(OnePlayer.class).sumPoints(10); 
+            //getWorldOfType(OnePlayer.class).sumPoints(10); 
             removeTouching(Castanets.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(Maracas.class))
         {
-            getWorldOfType(OnePlayer.class).sumPoints(5); 
+            //getWorldOfType(OnePlayer.class).sumPoints(5); 
             removeTouching(Maracas.class);
             Greenfoot.playSound("instrument.wav");
         }

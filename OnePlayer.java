@@ -38,8 +38,7 @@ public class OnePlayer extends World
         }
         //Speed inicial;
         speed = 50;
-        
-       
+    
         // Alocação De Objectos no Estado Inicial do Mundo.
         objectSpawn();
                
@@ -123,7 +122,7 @@ public class OnePlayer extends World
      */
     private void spawnInstrument()
     {
-        for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
+        for (int i = 0; i < Greenfoot.getRandomNumber(3); i++){
             if(Greenfoot.getRandomNumber(100) < 50){
                 makeType();
                 switch(type) {
