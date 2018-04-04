@@ -14,6 +14,7 @@ public class Player extends Actor
     private int animeCounter = 0; //conta interacções para fazer a animação 
     private String playerL, playerR;
     private int type;
+//    private World score = ;
     /**
      * Constructor Para Objectos da Classe Player.
      */
@@ -75,25 +76,25 @@ public class Player extends Actor
         //-----------------Instrumentos-----------------------
         if (isTouching(GuitarOne.class))
         {
-            //getWorldOfType(OnePlayer.class).sumPoints(20); 
+            score.sumPoints(20, 0);
             removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(GuitarTwo.class))
         {
-            //getWorldOfType(OnePlayer.class).sumPoints(15); 
+            score.sumPoints(15, 0); 
             removeTouching(GuitarTwo.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(Castanets.class))
         {
-            //getWorldOfType(OnePlayer.class).sumPoints(10); 
+            score.sumPoints(10, 0); 
             removeTouching(Castanets.class);
             Greenfoot.playSound("instrument.wav");
         }
          if (isTouching(Maracas.class))
         {
-            //getWorldOfType(OnePlayer.class).sumPoints(5); 
+            score.sumPoints(5, 0);
             removeTouching(Maracas.class);
             Greenfoot.playSound("instrument.wav");
         }

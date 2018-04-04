@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Toolkit;   //(Screensize and Dimensions)
 import java.awt.Dimension;
-
+import java.time.LocalDateTime; // gets time from system
 public class TwoPlayers extends World
 {
      // Declaração de Variáveis
@@ -12,8 +12,9 @@ public class TwoPlayers extends World
     private int imageCount = 0;
     private int imageCount2 = background.getHeight();
     private int score = 0; // Variável Para somar pontos. 
-    private int speed, level = 50;
-        
+    private int speed, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
+    private int seconds = 5; // marca quanto tempo demors para subir de nivel
+    
     /**
      * Constructor Para Objectos da Classe MyWorld.
      */
@@ -28,31 +29,33 @@ public class TwoPlayers extends World
         getBackground().drawImage(background, background.getWidth(), 0);
         // Prioridade dos Objectos.    
         setPaintOrder(ScoreText.class, UIBar.class, Barrier.class, Obstacle.class, Instrument.class, Player.class);
-        System.out.println("width: " + getWidth());
+        
         // Cria as posiçoes em X onde podem ser colocados objectos
         for (int i = 0; i < 8; i++){
           spawnPositionX[i] = ((getWidth() *(i+i+1))/16);
         }
         
         //Speed inicial;
-        speed = 75;
+        speed = 50;
+        nextLevel = LocalDateTime.now().getSecond() + seconds;
         
-       
+        
         // Alocação De Objectos no Estado Inicial do Mundo.
         objectSpawn();
                
     }
     
-   
      /**
      * This world act will make objects spawn on the top wich will then fall and interact with the player.
      */
     public void act()
     {
+       
         // Velocidade do jogo
-        Greenfoot.setSpeed(speed);
+        levelControl();
+        
         if (increment == 100){
-            //spawnObstacle();
+            spawnObstacle();
             //spawnBonus();
             spawnInstrument();
             increment=0;
@@ -60,6 +63,22 @@ public class TwoPlayers extends World
         else increment++;
         imageIncrement();
         moveBackground();
+    }
+    
+    private void levelControl(){
+       if (LocalDateTime.now().getSecond() == nextLevel){
+           
+           if (nextLevel + seconds > 60){
+               nextLevel += seconds - 60;
+               speed++;
+            }
+            else{
+                nextLevel += seconds;
+                speed++;
+            }
+           Greenfoot.setSpeed(speed);
+        }
+       
     }
     //-------------------BackGround--------------
      private void imageIncrement(){ 
@@ -93,7 +112,8 @@ public class TwoPlayers extends World
     {
         // Adicionar UI no Mundo
         addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); 
-        //addObject(new ScoreText(score), getWidth()/7, getHeight()- 5);
+        addObject(new ScoreText(), getWidth()/7, getHeight()- 5);
+        addObject(new ScoreText(), getWidth()/7 + getWidth()/2, getHeight()- 5);
         
         //Coloca os players nas suas posiçoes
         addObject(new Player(getHeight(), 1), getWidth()/4, getHeight() - getHeight()/10);
@@ -112,9 +132,7 @@ public class TwoPlayers extends World
         if(Greenfoot.getRandomNumber(100) < 50){   
             for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
                 makeType();
-                for (int j = 1; j < 3; j++){
-                    if (j == 1){
-                        switch(type) {
+                switch(type) {
                             case 1: 
                                 addObject(new GuitarOne(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);
                                 break;
@@ -127,29 +145,48 @@ public class TwoPlayers extends World
                             case 4: 
                                 addObject(new Castanets(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);
                                 break;
-                        }
-                    }
-                    else {
-                          switch(type) {
+                }
+            }
+        } 
+        if(Greenfoot.getRandomNumber(100) < 50){   
+            for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
+                makeType();
+                switch(type) {
                             case 1: 
-                                addObject(new GuitarOne(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)+4]), 0);
+                                addObject(new GuitarOne(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4) + 4]), 0);
                                 break;
                             case 2: 
-                                addObject(new GuitarTwo(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)+4]), 0);
+                                addObject(new GuitarTwo(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4) + 4]), 0);
                                 break;
                             case 3: 
-                                addObject(new Maracas(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)+4]), 0);
+                                addObject(new Maracas(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4) + 4]), 0);
                                 break;  
                             case 4: 
-                                addObject(new Castanets(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)+4]), 0);
+                                addObject(new Castanets(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4) + 4]), 0);
                                 break;
-                        }
-                    }
-                        
                 }
             }
         } 
     }
+    //--------------------Fim Instrumentos
+    //-----------------------Obstaculos
+     /**
+     * Método Para Criação De Obstáculos e Posicionamento Random, Nas Colunas do Mundo.
+     */
+    private void spawnObstacle()
+    {
+        for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
+            if(Greenfoot.getRandomNumber(100) < 70){
+                addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
+            }
+        } 
+        for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
+            if(Greenfoot.getRandomNumber(100) < 70){
+                addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4) + 4]), 0);        
+            }
+        } 
+    }
+    //----------------------------Fim Obstaculos
     /**
      * makeType faz a decisao de que instrumento sera colocado no mundo
      */

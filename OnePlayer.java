@@ -17,7 +17,7 @@ public class OnePlayer extends World
     private int imageCount2 = background.getHeight();
     private int score = 0; // Variável Para somar pontos. 
     private int speed, level = 50;
-   
+
     
     /**
      * Constructor Para Objectos da Classe OnePlayer.
@@ -38,7 +38,7 @@ public class OnePlayer extends World
         }
         //Speed inicial;
         speed = 50;
-    
+        
         // Alocação De Objectos no Estado Inicial do Mundo.
         objectSpawn();
                
@@ -146,17 +146,5 @@ public class OnePlayer extends World
     //-----------------------------------------Fim da secção Instrumentos------------------------------------------------
    
     
-     /**
-     * sumPoints(int points) serve para somar pontos, ao apanhar instrumentos.
-     */
-    public void sumPoints(int points){ 
-        score += points;
-        if (score >= level){
-              speed +=2;
-              level += 50;
-        }
-    } 
-    public int getScore(){
-        return score;
-    }
+    
 }
