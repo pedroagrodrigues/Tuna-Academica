@@ -112,8 +112,8 @@ public class TwoPlayers extends World
     {
         // Adicionar UI no Mundo
         addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); 
-        addObject(new ScoreText(), getWidth()/7, getHeight()- 5);
-        addObject(new ScoreText(), getWidth()/7 + getWidth()/2, getHeight()- 5);
+        addObject(new ScoreText(0), getWidth()/7, getHeight()- 5);
+        addObject(new ScoreText(1), getWidth()/7 + getWidth()/2, getHeight()- 5);
         
         //Coloca os players nas suas posiçoes
         addObject(new Player(getHeight(), 1), getWidth()/4, getHeight() - getHeight()/10);

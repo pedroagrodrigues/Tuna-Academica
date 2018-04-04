@@ -76,27 +76,63 @@ public class Player extends Actor
         //-----------------Instrumentos-----------------------
         if (isTouching(GuitarOne.class))
         {
-            score.sumPoints(20, 0);
+            if (type == 1)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(20, 0);            
             removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
+            }
+            if (type == 2)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(20, 1);            
+            removeTouching(GuitarOne.class);
+            Greenfoot.playSound("instrument.wav");
+            }            
         }
          if (isTouching(GuitarTwo.class))
         {
-            score.sumPoints(15, 0); 
+            if (type == 1)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(15, 0);            
             removeTouching(GuitarTwo.class);
             Greenfoot.playSound("instrument.wav");
+            }
+            if (type == 2)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(15, 1);            
+            removeTouching(GuitarTwo.class);
+            Greenfoot.playSound("instrument.wav");
+            }            
         }
          if (isTouching(Castanets.class))
         {
-            score.sumPoints(10, 0); 
+            if (type == 1)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(10, 0);            
             removeTouching(Castanets.class);
             Greenfoot.playSound("instrument.wav");
+            }
+            if (type == 2)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(10, 1);            
+            removeTouching(Castanets.class);
+            Greenfoot.playSound("instrument.wav");
+            }            
         }
          if (isTouching(Maracas.class))
         {
-            score.sumPoints(5, 0);
+            if (type == 1)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(5, 0);            
             removeTouching(Maracas.class);
             Greenfoot.playSound("instrument.wav");
+            }
+            if (type == 2)
+            {
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(5, 1);            
+            removeTouching(Maracas.class);
+            Greenfoot.playSound("instrument.wav");
+            }            
         }
         //------------Fim Instrumentos-----------------------        
         
