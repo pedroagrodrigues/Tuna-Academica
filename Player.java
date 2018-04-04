@@ -13,26 +13,26 @@ public class Player extends Actor
     private GreenfootImage imagemPlayer; // Variável Para Ajustamento do Tamanho do Player.
     private int animeCounter = 0; //conta interacções para fazer a animação 
     private String playerL, playerR;
-    private int type;
-//    private World score = ;
+    private int type; // Player 1 ou player2
+
     /**
      * Constructor Para Objectos da Classe Player.
      */
     public Player(int worldHeight, int type){
         // Manipulação da Imagem Player Para Um Formato Mais Adequado.
         getImage().scale(worldHeight/15, worldHeight/9);
-        this.type = type;
+        this.type = type - 1;
         keyDefine();        
     }
     
     private void keyDefine(){
-         if (type == 1){
+         if (type == 0){
             playerL = "A";
             playerR = "D";
         }
         else{
-            playerL = "J";
-            playerR = "L";
+            playerL = "left";
+            playerR = "right";
         }
         
     }
@@ -63,9 +63,9 @@ public class Player extends Actor
      */
     private void checkKeyPress(){
          if(Greenfoot.isKeyDown(playerL))
-            if((!isTouching(Barrier.class) && type == 2) || type == 1) setLocation(getX()-DELTA, getY());
+            if((!isTouching(Barrier.class) && type == 1) || type == 0) setLocation(getX()-DELTA, getY());
          if(Greenfoot.isKeyDown(playerR))
-            if((!isTouching(Barrier.class) && type == 1) || type == 2) setLocation(getX()+DELTA, getY());
+            if((!isTouching(Barrier.class) && type == 0) || type == 1) setLocation(getX()+DELTA, getY());
     }
     
     /**
@@ -73,77 +73,46 @@ public class Player extends Actor
      */
     private void playerInteraction()
     {
-        //-----------------Instrumentos-----------------------
+        //-----------------Instrumentos----------------------
         if (isTouching(GuitarOne.class))
         {
-            if (type == 1)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(20, 0);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(20, type);            
             removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
-            }
-            if (type == 2)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(20, 1);            
-            removeTouching(GuitarOne.class);
-            Greenfoot.playSound("instrument.wav");
-            }            
         }
-         if (isTouching(GuitarTwo.class))
+         
+        if (isTouching(GuitarTwo.class))
         {
-            if (type == 1)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(15, 0);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(15, type);            
             removeTouching(GuitarTwo.class);
             Greenfoot.playSound("instrument.wav");
-            }
-            if (type == 2)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(15, 1);            
-            removeTouching(GuitarTwo.class);
-            Greenfoot.playSound("instrument.wav");
-            }            
         }
-         if (isTouching(Castanets.class))
+        
+        if (isTouching(Castanets.class))
         {
-            if (type == 1)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(10, 0);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(10, type);            
             removeTouching(Castanets.class);
-            Greenfoot.playSound("instrument.wav");
-            }
-            if (type == 2)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(10, 1);            
-            removeTouching(Castanets.class);
-            Greenfoot.playSound("instrument.wav");
-            }            
+            Greenfoot.playSound("instrument.wav");       
         }
-         if (isTouching(Maracas.class))
+        
+        if (isTouching(Maracas.class))
         {
-            if (type == 1)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(5, 0);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(5, type);            
             removeTouching(Maracas.class);
             Greenfoot.playSound("instrument.wav");
-            }
-            if (type == 2)
-            {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(5, 1);            
-            removeTouching(Maracas.class);
-            Greenfoot.playSound("instrument.wav");
-            }            
         }
         //------------Fim Instrumentos-----------------------        
-        
-        
+          
         //Reprodução Som de Obstáculo Capturado (Game Over).
         if (isTouching(Obstacle.class))
         {
+            System.out.println("setting");
             Greenfoot.playSound("noo.wav");
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).setAlive(type);        
             getWorld().removeObject(this);
-            Greenfoot.stop();
+            //Greenfoot.stop();
         }
+    
     }
 
 }       

@@ -12,8 +12,8 @@ public class TwoPlayers extends World
     private int imageCount = 0;
     private int imageCount2 = background.getHeight();
     private int score = 0; // Variável Para somar pontos. 
-    private int speed, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
-    private int seconds = 5; // marca quanto tempo demors para subir de nivel
+    private int speed = 50, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
+    private final int SECONDS = 1; // marca quanto tempo demors para subir de nivel
     
     /**
      * Constructor Para Objectos da Classe MyWorld.
@@ -36,9 +36,8 @@ public class TwoPlayers extends World
         }
         
         //Speed inicial;
-        speed = 50;
-        nextLevel = LocalDateTime.now().getSecond() + seconds;
-        
+        nextLevel = LocalDateTime.now().getSecond() + SECONDS;
+        Greenfoot.setSpeed(speed);
         
         // Alocação De Objectos no Estado Inicial do Mundo.
         objectSpawn();
@@ -68,12 +67,12 @@ public class TwoPlayers extends World
     private void levelControl(){
        if (LocalDateTime.now().getSecond() == nextLevel){
            
-           if (nextLevel + seconds > 60){
-               nextLevel += seconds - 60;
+           if (nextLevel + SECONDS > 60){
+               nextLevel += SECONDS - 60;
                speed++;
             }
             else{
-                nextLevel += seconds;
+                nextLevel += SECONDS;
                 speed++;
             }
            Greenfoot.setSpeed(speed);
@@ -112,6 +111,7 @@ public class TwoPlayers extends World
     {
         // Adicionar UI no Mundo
         addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); 
+       
         addObject(new ScoreText(0), getWidth()/7, getHeight()- 5);
         addObject(new ScoreText(1), getWidth()/7 + getWidth()/2, getHeight()- 5);
         
