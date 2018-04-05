@@ -2,21 +2,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Toolkit;   //(Screensize and Dimensions)
 import java.awt.Dimension;
 import java.time.LocalDateTime; // gets time from system
+
 public class TwoPlayers extends World
 {
-     // Declaração de Variáveis
+    // Declaração de Variáveis
     private double[] spawnPositionX = new double[8]; // Variável Onde Guarda Possivel Quantidade de Objectos no Jogo.
     private int increment = 0; // Variavel Para Estabelecer uma Distância Entre Objectos.
     private int type; //Tipo de Instrumento
     private GreenfootImage background = new GreenfootImage("Floor.png");
-    private int imageCount = 0;
-    private int imageCount2 = background.getHeight();
-    private int score = 0; // Variável Para somar pontos. 
+    private int imageCount = 0, imageCount2 = background.getHeight(); //define a posiçao Y do background
     private int speed = 50, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
-    private final int SECONDS = 10; // marca quanto tempo demors para subir de nivel
+    private final int SECONDS = 5; // marca quanto tempo demors para subir de nivel
     
-    /**
-     * Constructor Para Objectos da Classe MyWorld.
+     /**
+     * TwoPlayers() e o metodo construtor do mundo, este faz a organizaçao
+     * inicial do mundo, define o tamanho do mundo, desenha o background inicial
+     * e chama os metodos necessarios para colocar os objectos no mundo
      */
     public TwoPlayers()
     {    
@@ -27,6 +28,7 @@ public class TwoPlayers extends World
         //Desenha o fundo
         getBackground().drawImage(background, 0, 0);
         getBackground().drawImage(background, background.getWidth(), 0);
+        
         // Prioridade dos Objectos.    
         setPaintOrder(ScoreText.class, UIBar.class, Barrier.class, Obstacle.class, Instrument.class, Player.class);
         
@@ -40,16 +42,15 @@ public class TwoPlayers extends World
         Greenfoot.setSpeed(speed);
         
         // Alocação De Objectos no Estado Inicial do Mundo.
-        objectSpawn();
-               
+        objectSpawn(); 
     }
     
      /**
-     * This world act will make objects spawn on the top wich will then fall and interact with the player.
+     * This world act will make objects spawn on the top wich 
+     * will then fall and interact with the player.
      */
     public void act()
     {
-       
         // Velocidade do jogo
         levelControl();
         
@@ -64,6 +65,14 @@ public class TwoPlayers extends World
         moveBackground();
     }
     
+    /**
+     * levelControl pede ao Sistema os segundos 
+     * recorrendo a funçao LocalDataTime.now().getSecond() que pertence
+     * ao package java.time.LocalDateTime.
+     * O resultado desta funçao e entao comparado com a variavel nextLevel
+     * se esta comparaçao se verificar verdadeira incrementamos entao 
+     * a velocidade do jogo
+     */
     private void levelControl(){
        if (LocalDateTime.now().getSecond() == nextLevel){
            
@@ -77,9 +86,13 @@ public class TwoPlayers extends World
             }
            Greenfoot.setSpeed(speed);
         }
-       
     }
-    //-------------------BackGround--------------
+    
+    //-------------------BackGround-----------------
+    /**
+     * imageIncrement simplesmente incrementa a variavel que postriormente 
+     * e utilizada para fazer a posiçao do Background
+     */
      private void imageIncrement(){ 
         if (imageCount < background.getHeight()){
             imageCount += 2;
@@ -96,22 +109,29 @@ public class TwoPlayers extends World
             
         }
     }
+    /**
+     * Coloca o background, com o auxilio do metodo anterior(imageIncrement),
+     * ligeiramente a baixo da posiçao anterior, dando a aparencia que o 
+     * fundo se desloca
+     */
     private void moveBackground(){
         getBackground().drawImage(background, 0, imageCount);
         getBackground().drawImage(background, background.getWidth(), imageCount);
         getBackground().drawImage(background, 0, imageCount2); 
         getBackground().drawImage(background, background.getWidth(), imageCount2);
     }
-    //------------------------------------------------
+    //-------------------End Background---------------
+    
     //-------------------Spawn Objectos---------------
     /**
-    *  Método Para Posicionar Objectos no Mundo.
-    */
+     *  objectSpawn() - Cria Interface Inicial Do Utilizador
+     *  colocando os objectos bem como a personagem no mundo
+     */
     public void objectSpawn()
     {
         // Adicionar UI no Mundo
         addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7);
-        addObject(new ScoreText(0), getWidth()/7, getHeight()- 5);
+        addObject(new ScoreText(0), getWidth()/2, getHeight()- 5);
         //Coloca os players nas suas posiçoes
         addObject(new Player(getHeight(), 1), getWidth()/4, getHeight() - getHeight()/10);
         addObject(new Player(getHeight(), 2), getWidth()/2 + getWidth()/4, getHeight() - getHeight()/10);
@@ -119,12 +139,46 @@ public class TwoPlayers extends World
         //Coloca a delimitaçao do espaço de cada jogador
         addObject(new Barrier(), getWidth()/2, getHeight()/2);
     }
-    //--------Instrumentos
-    /**
-     * spawnInstrument coloca os Instrumentos no mundo
+    //-----------------------Obstaculos-------------
+     /**
+     * spawnObstacle, coloca obstaculos no mundo, numa das quatro
+     * posiçoes pre-definidas no array spawnPosition[];
      */
-    private void spawnInstrument()
+    private void spawnObstacle()
     {
+        for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
+            if(Greenfoot.getRandomNumber(100) < 70){
+                addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
+            }
+        } 
+        for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
+            if(Greenfoot.getRandomNumber(100) < 70){
+                addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4) + 4]), 0);        
+            }
+        } 
+    }
+    //----------------------------Fim Obstaculos---------------
+    //-----------------------------------------------Secção dos Instrumentos---------------------------------
+    /**
+     * makeType e o metodo responsavel pela escolha aleatoria de que tipo
+     * de objeto vai ser colocado no mundo
+     */
+    private void makeType(){
+        int rand = Greenfoot.getRandomNumber(100); // 0 - 99 
+        //var provisória utilizada só para fazer os cálculos 
+        //(podiamos utilizar a variável type para o mesmo efeito)
+        if (rand < 25) type = 1;
+        else if (rand > 25 && rand < 50) type = 2;
+            else if (rand > 50 && rand < 75) type = 3;
+        else type = 4;
+    }
+    /**
+     * spawnInstrument coloca objetos pontuaveis no mundo,
+     * estes objetos sao escolhidos aleatoriamente pelo metodo makeType
+     * e posteriormente colocados numa posiçao aleatoria defenida no array
+     * spawnPosition[]
+     */
+    private void spawnInstrument(){
           
         if(Greenfoot.getRandomNumber(100) < 50){   
             for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
@@ -165,36 +219,5 @@ public class TwoPlayers extends World
             }
         } 
     }
-    //--------------------Fim Instrumentos
-    //-----------------------Obstaculos
-     /**
-     * Método Para Criação De Obstáculos e Posicionamento Random, Nas Colunas do Mundo.
-     */
-    private void spawnObstacle()
-    {
-        for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
-            if(Greenfoot.getRandomNumber(100) < 70){
-                addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4)]), 0);        
-            }
-        } 
-        for (int i = 0; i < Greenfoot.getRandomNumber(4); i++){
-            if(Greenfoot.getRandomNumber(100) < 70){
-                addObject(new Obstacle(getHeight()), (int)(spawnPositionX[Greenfoot.getRandomNumber(4) + 4]), 0);        
-            }
-        } 
-    }
-    //----------------------------Fim Obstaculos
-    /**
-     * makeType faz a decisao de que instrumento sera colocado no mundo
-     */
-    private void makeType(){
-        int rand = Greenfoot.getRandomNumber(100); // 0 - 99 
-        //var provisória utilizada só para fazer os cálculos 
-        //(podiamos utilizar a variável type para o mesmo efeito)
-        if (rand < 25) type = 1;
-        else if (rand > 25 && rand < 50) type = 2;
-            else if (rand > 50 && rand < 75) type = 3;
-        else type = 4;
-    }
-        
+    //--------------------Fim Instrumentos------------------  
 }

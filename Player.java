@@ -20,7 +20,7 @@ public class Player extends Actor
     public Player(int worldHeight, int type){
         // Manipulação da Imagem Player Para Um Formato Mais Adequado.
         getImage().scale(worldHeight/15, worldHeight/9);
-        this.type = type - 1;
+        this.type =  type - 1;
         keyDefine();        
     }
     

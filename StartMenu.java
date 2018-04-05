@@ -1,18 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Toolkit;   //(Screensize and Dimensions)
 import java.awt.Dimension;
-/**
- * Write a description of class StartMenu here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
 public class StartMenu extends World
 {
     // Declaração de Variáveis
     
     /**
-     * Constructor Para Objectos da Classe StartMenu.
+     * Cria um mundo onde vamos ter as opçoes de jogo
      */
     public StartMenu()
     {    

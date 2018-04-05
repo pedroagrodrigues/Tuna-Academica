@@ -1,16 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Obstacle here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Obstaculos criados para que o jogador tenha que se desviar
+ * o jogador perde se tocar num destes
  */
 
 public class Obstacle extends Actor
 {
-    // Declaração de Variáveis
-
     /**
      * Construtor: Cria Os Obstáculos a Serem Colocados no Mundo.
      */
@@ -20,8 +16,8 @@ public class Obstacle extends Actor
     }
     
      /**
-     * Act - do whatever the Obstacle wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Faz o objecto se deslocar e ser destruido quando este chega
+     * ao fim do mundo. 
      */
     public void act() 
     {
@@ -30,7 +26,7 @@ public class Obstacle extends Actor
     }
     
     /**
-     * Criação Obstáculo: Definição de Imagem e Pontuação.
+     * defineObstacle define qual a imagem a colocar no objecto criado
      */
     private void defineObstacle(int type, int worldWidth)
     {
@@ -47,7 +43,6 @@ public class Obstacle extends Actor
                 setImage(new GreenfootImage("Table.png"));
                 getImage().scale(worldWidth/14, worldWidth/20);
                 break;  
-            
        }
     }
     
@@ -57,8 +52,8 @@ public class Obstacle extends Actor
     private int setType()
     {
         int result = Greenfoot.getRandomNumber(100);
-        if (result < 25) result = 1;
-        else if (result > 25 && result < 50) result = 2;
+        if (result < 33) result = 1;
+        else if (result > 33 && result < 66) result = 2;
              else result = 3;
         return result;
     }

@@ -5,11 +5,13 @@ public class ScoreText extends Actor
     private String text;
     private int[] score = {0, 0};
     private boolean[] alive = {true, true};
+    private int world;
     /**
      * Construtor no mundo OnePlayer 
      */
     public ScoreText(){
         text = "Score: " + score[0];
+        world = 1;
         setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
         
     }
@@ -19,15 +21,9 @@ public class ScoreText extends Actor
      */
     
     public ScoreText(int secondWorld){
-        if (secondWorld == 0){
-            text = "Score: " + score[0] + "                 Score: " + score[1];
-            setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
-        }
-        else if(secondWorld == 1){
-            text = "Score: " + score[0] + "                 Score: " + score[1];
-            setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
-        }
-        else return;
+        world = 2;
+        text = "Score: " + score[0] + "                 Score: " + score[1];
+        setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
     }
     
     
@@ -36,13 +32,13 @@ public class ScoreText extends Actor
     */
     public void sumPoints(int points, int player){ 
         score[player] += points;
-        text = "Score: " + score[0] + "                 Score: " + score[1];
+        if (world == 1) text = "Score: " + score[0];
+        else text = "Score: " + score[0] + "                 Score: " + score[1];
         setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
     }
-    
+   
     public void act(){
-       System.out.println(""+(!alive[0] && score[1] > score[0]) + "    " +  (!alive[1] && score[0] > score[1]) + "    " +(!alive[1]  && !alive[0]));
-       if ((!alive[0] && score[1] > score[0]) || (!alive[1] && score[0] > score[1]) || (!alive[1]  && !alive[0])){
+       if ((!alive[0] && score[1] > score[0]) || (!alive[1] && score[0] > score[1]) || (!alive[1]  && !alive[0]) || (!alive[0] && world == 1)){
            endGame();
         }
     }
@@ -53,24 +49,29 @@ public class ScoreText extends Actor
     
     private void endGame()
     {
-        if(score[0] > score[1])
-        {
-            text = "Player 1 WIN!/n " + score[0];
+        if (world == 1){
+            text = "Game Over! " + "\n" + score[0] + " pontos!";
             setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0))); 
             setLocation(getWorld().getWidth()/2,getWorld().getHeight()/2);
         }
-        else if(score[0] == score[1])
+            else if(score[0] > score[1])
             {
-                text = "EMPATE!";
+                text = "Player 1 WIN! " + "\n" + score[1] + " pontos!";
                 setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0))); 
                 setLocation(getWorld().getWidth()/2,getWorld().getHeight()/2);
             }
-        else
-        {
-           text = "Player 2 WIN!/n " + score[1];
-            setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0))); 
-            setLocation(getWorld().getWidth()/2,getWorld().getHeight()/2);
-        }
+                else if(score[0] == score[1])
+                {
+                    text = "EMPATE!" + "\n" + score[0] + " pontos!";;
+                    setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0))); 
+                    setLocation(getWorld().getWidth()/2,getWorld().getHeight()/2);
+                }
+                    else
+                    {
+                        text = "Player 2 WIN! " + "\n" + score[1] + " pontos!";
+                        setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0))); 
+                        setLocation(getWorld().getWidth()/2,getWorld().getHeight()/2);
+                    }
         Greenfoot.stop();
     }
   

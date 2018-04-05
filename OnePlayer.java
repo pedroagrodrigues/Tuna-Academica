@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.awt.Toolkit;   //Toolkit e Dimension obtem a resoluçao do ecran
 import java.awt.Dimension;
-import java.awt.Font;
+import java.time.LocalDateTime; // gets time from system
 /**
- * Write a description of class OnePlayer here.
- * 
+ * OnePlayer e uma subclass de world
+ * esta class utiliza-se para "criar" o mundo para um jogador.
  */
 public class OnePlayer extends World
 {
@@ -15,12 +15,13 @@ public class OnePlayer extends World
     private GreenfootImage background = new GreenfootImage("Floor.png");
     private int imageCount = 0;
     private int imageCount2 = background.getHeight();
-    private int score = 0; // Variável Para somar pontos. 
-    private int speed, level = 50;
-
+    private final int SECONDS = 5; // marca quanto tempo demors para subir de nivel
+    private int speed = 50, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
     
     /**
-     * Constructor Para Objectos da Classe OnePlayer.
+     * OnePlayer() e o metodo construtor do mundo, este faz a organizaçao
+     * inicial do mundo, define o tamanho do mundo, desenha o background inicial
+     * e chama os metodos necessarios para colocar os objectos no mundo
      */
     public OnePlayer()
     {    
@@ -28,7 +29,8 @@ public class OnePlayer extends World
         super((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/6),
             (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
         //Desenha o fundo
-        getBackground().drawImage(background, 0, 0);    
+        getBackground().drawImage(background, 0, 0); 
+        
         // Prioridade dos Objectos.    
         setPaintOrder(ScoreText.class, UIBar.class, Obstacle.class, Instrument.class, Player.class);
        
@@ -37,22 +39,23 @@ public class OnePlayer extends World
           spawnPositionX[i] = ((getWidth() *(i+i+1))/8);
         }
         //Speed inicial;
-        speed = 50;
-        
+        nextLevel = LocalDateTime.now().getSecond() + SECONDS;
+        Greenfoot.setSpeed(speed);
         // Alocação De Objectos no Estado Inicial do Mundo.
         objectSpawn();
                
     }  
     /**
      * This world act will make objects spawn on the top wich will then fall and interact with the player.
+     * The functions defined here are:
+     * levelControl to control the speed
+     * moveBackground to move the background
      */
     public void act()
     {
         // Velocidade do jogo
-        Greenfoot.setSpeed(speed);
         if (increment == 100){
             spawnObstacle();
-            //spawnBonus();
             spawnInstrument();
             increment=0;
         }
@@ -60,7 +63,33 @@ public class OnePlayer extends World
         imageIncrement();
         moveBackground();
     }
-    
+    /**
+     * levelControl pede ao Sistema os segundos 
+     * recorrendo a funçao LocalDataTime.now().getSecond() que pertence
+     * ao package java.time.LocalDateTime.
+     * O resultado desta funçao e entao comparado com a variavel nextLevel
+     * se esta comparaçao se verificar verdadeira incrementamos entao 
+     * a velocidade do jogo
+     */
+    private void levelControl(){
+       if (LocalDateTime.now().getSecond() >= nextLevel){
+           
+           if (nextLevel + SECONDS > 60){
+               nextLevel += SECONDS - 60;
+               speed++;
+            }
+            else{
+                nextLevel += SECONDS;
+                speed++;
+            }
+           Greenfoot.setSpeed(speed);
+        }
+    }
+    //-------------------BackGround-----------------
+    /**
+     * imageIncrement simplesmente incrementa a variavel que postriormente 
+     * e utilizada para fazer a posiçao do Background
+     */
     private void imageIncrement(){ 
         if (imageCount < background.getHeight()){
             imageCount += 2;
@@ -77,26 +106,30 @@ public class OnePlayer extends World
             
         }
     }
+    /**
+     * Coloca o background, com o auxilio do metodo anterior(imageIncrement),
+     * ligeiramente a baixo da posiçao anterior, dando a aparencia que o 
+     * fundo se desloca
+     */
     private void moveBackground(){
         getBackground().drawImage(background, 0, imageCount);
         getBackground().drawImage(background, 0, imageCount2);  
     }
+    //-----------End BackGround-------------------------
     /**
-     * Tipos de Objectos:
-     *  objectSpawn() - Cria Interface Inicial Do Utilizador.
-     *  spawnObstacle() - Cria 3 ou menos Obstáculos Alinhados.
-     *  spawnInstrument() - Cria um Instrumento.
-     *  spawnBonus() - Cria um Bónus Que Poderá ser Utilizado Futuramente (Se For Capturado).
+     *  objectSpawn() - Cria Interface Inicial Do Utilizador
+     *  colocando os objectos bem como a personagem no mundo
      */
     private void objectSpawn()
     {
         addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); // Barra De Pontuação/Informação.
-        addObject(new ScoreText(score), getWidth()/7, getHeight()- 5);
+        addObject(new ScoreText(), getWidth()/2, getHeight()- 5);
         addObject(new Player(getHeight(), 1), getWidth()/2, getHeight() - getHeight()/10);
     }
     
     /**
-     * Método Para Criação De Obstáculos e Posicionamento Random, Nas Colunas do Mundo.
+     * spawnObstacle, coloca obstaculos no mundo, numa das quatro
+     * posiçoes pre-definidas no array spawnPosition[];
      */
     private void spawnObstacle()
     {
@@ -107,6 +140,10 @@ public class OnePlayer extends World
         } 
     }
     //-----------------------------------------------Secção dos Instrumentos---------------------------------
+    /**
+     * makeType e o metodo responsavel pela escolha aleatoria de que tipo
+     * de objeto vai ser colocado no mundo
+     */
     private void makeType(){
         int rand = Greenfoot.getRandomNumber(100); // 0 - 99 
         //var provisória utilizada só para fazer os cálculos 
@@ -118,7 +155,10 @@ public class OnePlayer extends World
         //Neste momento todos os instrumentos têm 25% de probabilidade de serem criados.
     }
     /**
-     * spawnInstrument coloca os Instrumentos no mundo
+     * spawnInstrument coloca objetos pontuaveis no mundo,
+     * estes objetos sao escolhidos aleatoriamente pelo metodo makeType
+     * e posteriormente colocados numa posiçao aleatoria defenida no array
+     * spawnPosition[]
      */
     private void spawnInstrument()
     {
