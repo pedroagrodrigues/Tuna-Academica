@@ -13,7 +13,7 @@ public class TwoPlayers extends World
     private int imageCount2 = background.getHeight();
     private int score = 0; // Variável Para somar pontos. 
     private int speed = 50, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
-    private final int SECONDS = 1; // marca quanto tempo demors para subir de nivel
+    private final int SECONDS = 10; // marca quanto tempo demors para subir de nivel
     
     /**
      * Constructor Para Objectos da Classe MyWorld.
@@ -110,11 +110,8 @@ public class TwoPlayers extends World
     public void objectSpawn()
     {
         // Adicionar UI no Mundo
-        addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7); 
-       
+        addObject(new UIBar(getWidth()), getWidth()/2, getHeight()- 7);
         addObject(new ScoreText(0), getWidth()/7, getHeight()- 5);
-        addObject(new ScoreText(1), getWidth()/7 + getWidth()/2, getHeight()- 5);
-        
         //Coloca os players nas suas posiçoes
         addObject(new Player(getHeight(), 1), getWidth()/4, getHeight() - getHeight()/10);
         addObject(new Player(getHeight(), 2), getWidth()/2 + getWidth()/4, getHeight() - getHeight()/10);
@@ -198,7 +195,6 @@ public class TwoPlayers extends World
         else if (rand > 25 && rand < 50) type = 2;
             else if (rand > 50 && rand < 75) type = 3;
         else type = 4;
-        //Neste momento todos os instrumentos têm 25% de probabilidade de serem criados.
     }
         
 }

@@ -1,5 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
 /**
  * Write a description of class Player here.
  * 
@@ -76,28 +75,28 @@ public class Player extends Actor
         //-----------------Instrumentos----------------------
         if (isTouching(GuitarOne.class))
         {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(20, type);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(20, type);            
             removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
         }
          
         if (isTouching(GuitarTwo.class))
         {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(15, type);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(15, type);            
             removeTouching(GuitarTwo.class);
             Greenfoot.playSound("instrument.wav");
         }
         
         if (isTouching(Castanets.class))
         {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(10, type);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(10, type);            
             removeTouching(Castanets.class);
             Greenfoot.playSound("instrument.wav");       
         }
         
         if (isTouching(Maracas.class))
         {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).sumPoints(5, type);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(5, type);            
             removeTouching(Maracas.class);
             Greenfoot.playSound("instrument.wav");
         }
@@ -106,11 +105,12 @@ public class Player extends Actor
         //Reprodução Som de Obstáculo Capturado (Game Over).
         if (isTouching(Obstacle.class))
         {
-            System.out.println("setting");
+            
             Greenfoot.playSound("noo.wav");
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(type)).setAlive(type);        
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).playerAlive(type);
+            
             getWorld().removeObject(this);
-            //Greenfoot.stop();
+
         }
     
     }
