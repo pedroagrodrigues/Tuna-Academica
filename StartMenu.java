@@ -26,8 +26,8 @@ public class StartMenu extends World
      */
     private void objectSpawn()
     {
-        addObject(new Button(0, getHeight()), (int)(getWidth()/4), 100);
+        addObject(new Button(0, getHeight()), (int)((getWidth()/2)-(getWidth()/3)), 100);
         addObject(new Button(1, getHeight()), (int) ((getWidth()/2)+(getWidth()/3)), 100);
-        addObject(new Button(2, getHeight()), (int) (getWidth()/5), (int)(getHeight()-100));
+        addObject(new Button(2, getHeight()), (int) ((getWidth()/2)-(getWidth()/3)), (int)(getHeight()-100));
     }
 }

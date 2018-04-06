@@ -80,7 +80,7 @@ public class OnePlayer extends World
      * a velocidade do jogo
      */
     private void levelControl(){
-       if (LocalDateTime.now().getSecond() >= nextLevel){
+       if (LocalDateTime.now().getSecond() == nextLevel){
            
            if ((nextLevel + SECONDS) > 60){
                nextLevel += SECONDS - 60;
