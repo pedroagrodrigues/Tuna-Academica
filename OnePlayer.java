@@ -9,14 +9,13 @@ import java.time.LocalDateTime; // gets time from system
 public class OnePlayer extends World
 {
     // Declaração de Variáveis
-    private double[] spawnPositionX = new double[4]; // Variável Onde Guarda Possivel Quantidade de Objectos no Jogo.
-    private int increment = 0; // Variavel Para Estabelecer uma Distância Entre Objectos.
+    private double[] spawnPositionX; // Variável Onde Guarda Possivel Quantidade de Objectos no Jogo.
+    private int increment; // Variavel Para Estabelecer uma Distância Entre Objectos.
     private int type; //Tipo de Instrumento
     private GreenfootImage background = new GreenfootImage("Floor.png");
-    private int imageCount = 0;
-    private int imageCount2 = background.getHeight();
+    private int imageCount,imageCount2;
     private final int SECONDS = 5; // marca quanto tempo demors para subir de nivel
-    private int speed = 50, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
+    private int speed, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
     
     /**
      * OnePlayer() e o metodo construtor do mundo, este faz a organizaçao
@@ -28,6 +27,14 @@ public class OnePlayer extends World
         // Define o Tamanho do super de Acordo com a Resolução do Ecrã.
         super((int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/6),
             (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
+        //variaveis
+        spawnPositionX = new double[4];
+        increment = 0;
+        imageCount = 0;
+        imageCount2 = background.getHeight();
+        speed = 50;
+        
+        
         //Desenha o fundo
         getBackground().drawImage(background, 0, 0); 
         
@@ -62,6 +69,7 @@ public class OnePlayer extends World
         else increment++;
         imageIncrement();
         moveBackground();
+        levelControl();
     }
     /**
      * levelControl pede ao Sistema os segundos 
@@ -148,9 +156,9 @@ public class OnePlayer extends World
         int rand = Greenfoot.getRandomNumber(100); // 0 - 99 
         //var provisória utilizada só para fazer os cálculos 
         //(podiamos utilizar a variável type para o mesmo efeito)
-        if (rand < 25) type = 1;
-        else if (rand > 25 && rand < 50) type = 2;
-            else if (rand > 50 && rand < 75) type = 3;
+        if (rand < 40) type = 1;
+        else if (rand > 40 && rand < 70) type = 2;
+            else if (rand > 70 && rand < 80) type = 3;
         else type = 4;
         //Neste momento todos os instrumentos têm 25% de probabilidade de serem criados.
     }
@@ -163,7 +171,7 @@ public class OnePlayer extends World
     private void spawnInstrument()
     {
         for (int i = 0; i < Greenfoot.getRandomNumber(3); i++){
-            if(Greenfoot.getRandomNumber(100) < 50){
+            if(Greenfoot.getRandomNumber(100) < 80){
                 makeType();
                 switch(type) {
                     case 1: 

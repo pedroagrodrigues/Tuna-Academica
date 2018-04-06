@@ -28,7 +28,7 @@ public class ScoreText extends Actor
     
     
     /**
-    * sumPoints(int points) serve para somar pontos, ao apanhar instrumentos.
+    * sumPoints(int points, int player) serve para somar pontos, ao apanhar instrumentos.
     */
     public void sumPoints(int points, int player){ 
         score[player] += points;
@@ -36,17 +36,24 @@ public class ScoreText extends Actor
         else text = "Score: " + score[0] + "                 Score: " + score[1];
         setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
     }
-   
+    /**
+     * Verifica quando acaba o jogo para devolver a pontuaçao
+     */
     public void act(){
        if ((!alive[0] && score[1] > score[0]) || (!alive[1] && score[0] > score[1]) || (!alive[1]  && !alive[0]) || (!alive[0] && world == 1)){
            endGame();
         }
     }
-    
+    /**
+     * atribui o valor falso a variavel correspondente ao player que acabou de perder
+     */
     public void playerAlive(int player){
         alive[player] = false;
     }
     
+    /**
+     * Acaba o jogo devolvendo a pontuaçao do vencedor
+     */
     private void endGame()
     {
         if (world == 1){

@@ -6,20 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Instrument extends Actor{
     /**
-     * Contrutor de Instrumentos, a altura recebida é comum em todos os mundos
-     * e com esta conseguimos formatar as imagens para o tamanho pretendido.
+     * Desloca o objeto na vertical e destoi-o no fim do mundo
      */
-    
     public void act(){
        setLocation(getX(), getY() + 2);
        destruction();
-    }
-    /*
-     * makeType gera um numero entre 1 e 4 e guarda-o na nossa variável type
-     */
-   
-    
-    
+    } 
     /**
      * destruction elemina o Instrumento no Fim do Mundo, e Eliminação de Sobreposições Entre Intrumentos.
      */

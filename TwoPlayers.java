@@ -6,12 +6,12 @@ import java.time.LocalDateTime; // gets time from system
 public class TwoPlayers extends World
 {
     // Declaração de Variáveis
-    private double[] spawnPositionX = new double[8]; // Variável Onde Guarda Possivel Quantidade de Objectos no Jogo.
-    private int increment = 0; // Variavel Para Estabelecer uma Distância Entre Objectos.
+    private double[] spawnPositionX; // Variável Onde Guarda Possivel Quantidade de Objectos no Jogo.
+    private int increment; // Variavel Para Estabelecer uma Distância Entre Objectos.
     private int type; //Tipo de Instrumento
-    private GreenfootImage background = new GreenfootImage("Floor.png");
-    private int imageCount = 0, imageCount2 = background.getHeight(); //define a posiçao Y do background
-    private int speed = 50, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
+    private GreenfootImage background;
+    private int imageCount, imageCount2; //define a posiçao Y do background
+    private int speed, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
     private final int SECONDS = 5; // marca quanto tempo demors para subir de nivel
     
      /**
@@ -20,11 +20,18 @@ public class TwoPlayers extends World
      * e chama os metodos necessarios para colocar os objectos no mundo
      */
     public TwoPlayers()
-    {    
+    {
         // Cria um Mundo Com Metade do Tamanho do Ecrã, Dinamicamente Para Qualquer Ecrã.
         super((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/3,
         (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.5), 1);
-       
+        
+        //Inicializaçao de variaveis
+        spawnPositionX = new double[8];
+        increment = 0;
+        background = new GreenfootImage("Floor.png");
+        imageCount = 0;
+        imageCount2 = background.getHeight();
+        speed = 50;
         //Desenha o fundo
         getBackground().drawImage(background, 0, 0);
         getBackground().drawImage(background, background.getWidth(), 0);
@@ -63,6 +70,7 @@ public class TwoPlayers extends World
         else increment++;
         imageIncrement();
         moveBackground();
+        levelControl();
     }
     
     /**
@@ -167,9 +175,9 @@ public class TwoPlayers extends World
         int rand = Greenfoot.getRandomNumber(100); // 0 - 99 
         //var provisória utilizada só para fazer os cálculos 
         //(podiamos utilizar a variável type para o mesmo efeito)
-        if (rand < 25) type = 1;
-        else if (rand > 25 && rand < 50) type = 2;
-            else if (rand > 50 && rand < 75) type = 3;
+        if (rand < 40) type = 1;
+        else if (rand > 40 && rand < 70) type = 2;
+            else if (rand > 70 && rand < 80) type = 3;
         else type = 4;
     }
     /**
@@ -180,7 +188,7 @@ public class TwoPlayers extends World
      */
     private void spawnInstrument(){
           
-        if(Greenfoot.getRandomNumber(100) < 50){   
+        if(Greenfoot.getRandomNumber(100) < 80){   
             for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
                 makeType();
                 switch(type) {
@@ -198,8 +206,7 @@ public class TwoPlayers extends World
                                 break;
                 }
             }
-        } 
-        if(Greenfoot.getRandomNumber(100) < 50){   
+            
             for (int i = 0; i < Greenfoot.getRandomNumber(2); i++){
                 makeType();
                 switch(type) {

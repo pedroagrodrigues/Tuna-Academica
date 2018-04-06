@@ -9,21 +9,23 @@ public class Player extends Actor
 {
     // Declaração de Variáveis
     private final int DELTA = 5; // Descolamento do Player.
-    private GreenfootImage imagemPlayer; // Variável Para Ajustamento do Tamanho do Player.
-    private int animeCounter = 0; //conta interacções para fazer a animação 
+    private int animeCounter; //conta interacções para fazer a animação 
     private String playerL, playerR;
     private int type; // Player 1 ou player2
 
     /**
-     * Constructor Para Objectos da Classe Player.
+     * Define o Player formatando a imagem e defenindo que tipo de jogador se trata (1 ou 2)
      */
     public Player(int worldHeight, int type){
+        animeCounter = 0;
         // Manipulação da Imagem Player Para Um Formato Mais Adequado.
         getImage().scale(worldHeight/15, worldHeight/9);
         this.type =  type - 1;
         keyDefine();        
     }
-    
+    /**
+     * Define as teclas de deslocamento
+     */
     private void keyDefine(){
          if (type == 0){
             playerL = "A";
@@ -37,8 +39,8 @@ public class Player extends Actor
     }
     
     /**
-     * Act - do whatever the Player wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Define o comportamento do jogador atravez da referencia
+     * de outros metodos.
      */
     public void act() 
     {
@@ -58,7 +60,7 @@ public class Player extends Actor
     
     
     /**
-     * Método Para Movimentações do Player.
+     * Método Para defenir como o objecto se vai mover
      */
     private void checkKeyPress(){
          if(Greenfoot.isKeyDown(playerL))
@@ -68,14 +70,14 @@ public class Player extends Actor
     }
     
     /**
-     * Método Para as Interações do Player.
+     * Método Para as Interações do Player com outros objectos.
      */
     private void playerInteraction()
     {
         //-----------------Instrumentos----------------------
         if (isTouching(GuitarOne.class))
         {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(20, type);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(5, type);            
             removeTouching(GuitarOne.class);
             Greenfoot.playSound("instrument.wav");
         }
@@ -89,20 +91,20 @@ public class Player extends Actor
         
         if (isTouching(Castanets.class))
         {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(10, type);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(25, type);            
             removeTouching(Castanets.class);
             Greenfoot.playSound("instrument.wav");       
         }
         
         if (isTouching(Maracas.class))
         {
-            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(5, type);            
+            ((ScoreText)getWorld().getObjects(ScoreText.class).get(0)).sumPoints(50, type);            
             removeTouching(Maracas.class);
             Greenfoot.playSound("instrument.wav");
         }
         //------------Fim Instrumentos-----------------------        
           
-        //Reprodução Som de Obstáculo Capturado (Game Over).
+        //colisao com obstaculo
         if (isTouching(Obstacle.class))
         {
             

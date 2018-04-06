@@ -38,14 +38,13 @@ public class Button extends Actor
     }
    
     /**
-     * Act - do whatever the Button wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Anima o botao quando se coloca o rato por cima do mesmo
      */
     public void act() 
     {
         // Reajusta Tamanho da Opção para 90% do Seu Tamanho Original.
         if(Greenfoot.mouseMoved(this) && !mouseOver){
-            getImage().scale(getImage().getWidth()*90/100, getImage().getHeight()*90/100);
+            getImage().scale(getImage().getWidth()*95/100, getImage().getHeight()*95/100);
             mouseOver = true;
         }            
         // Chama o Mundo se a Opção Foi Selecionada.
@@ -53,14 +52,14 @@ public class Button extends Actor
             placeWorld();
         // Faz Opção Retroceder/ Voltar ao Tamanho Original.
         if(Greenfoot.mouseMoved(null) && !Greenfoot.mouseMoved(this) && mouseOver){
-            getImage().scale(getImage().getWidth()*100/90,getImage().getHeight()*100/90);
+            getImage().scale(getImage().getWidth()*100/95,getImage().getHeight()*100/95);
             mouseOver = false;
         }
  
     }
     
     /**
-     * Método Criado Para Definir a Função de Cada Opção Do Menu.
+     * Método que define a funçao de cada botao
      */
     private void placeWorld()
     {
