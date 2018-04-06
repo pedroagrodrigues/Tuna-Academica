@@ -14,7 +14,7 @@ public class OnePlayer extends World
     private int type; //Tipo de Instrumento
     private GreenfootImage background = new GreenfootImage("Floor.png");
     private int imageCount,imageCount2;
-    private final int SECONDS = 5; // marca quanto tempo demors para subir de nivel
+    private final int SECONDS = 10; // marca quanto tempo demors para subir de nivel
     private int speed, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
     
     /**
@@ -82,7 +82,7 @@ public class OnePlayer extends World
     private void levelControl(){
        if (LocalDateTime.now().getSecond() >= nextLevel){
            
-           if (nextLevel + SECONDS > 60){
+           if ((nextLevel + SECONDS) > 60){
                nextLevel += SECONDS - 60;
                speed++;
             }

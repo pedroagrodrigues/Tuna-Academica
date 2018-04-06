@@ -12,7 +12,7 @@ public class TwoPlayers extends World
     private GreenfootImage background;
     private int imageCount, imageCount2; //define a posiçao Y do background
     private int speed, nextLevel; // denota a velocidade actual e a quantos segundos sera o proximo nivel
-    private final int SECONDS = 5; // marca quanto tempo demors para subir de nivel
+    private final int SECONDS = 10; // marca quanto tempo demors para subir de nivel
     
      /**
      * TwoPlayers() e o metodo construtor do mundo, este faz a organizaçao
@@ -84,7 +84,7 @@ public class TwoPlayers extends World
     private void levelControl(){
        if (LocalDateTime.now().getSecond() == nextLevel){
            
-           if (nextLevel + SECONDS > 60){
+           if ((nextLevel + SECONDS) > 60){
                nextLevel += SECONDS - 60;
                speed++;
             }
