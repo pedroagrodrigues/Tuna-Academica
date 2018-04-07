@@ -19,7 +19,7 @@ public class Castanets extends Instrument
      * 
      */
     public void isClose(){
-        if(getWorldOfType(OnePlayer.class) != null || getWorldOfType(TwoPlayers.class) != null) //evitar erros de colocaçao no mundo
+        if(getWorld() != null) //evitar erros de colocaçao no mundo
             if (getObjectsInRange(300, Player.class).size() >= 1 && !inRange){
                 inRange = true;
                 if(Greenfoot.getRandomNumber(10) < 4){

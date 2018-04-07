@@ -32,10 +32,12 @@ public class ScoreText extends Actor
     * sumPoints(int points, int player) serve para somar pontos, ao apanhar instrumentos.
     */
     public void sumPoints(int points, int player){ 
-        score[player] += points;
-        if (world == 1) text = "Score: " + score[0];
-        else text = "Score: " + score[0] + "                 Score: " + score[1];
-        setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
+        if (!worldEnd){
+            score[player] += points;
+            if (world == 1) text = "Score: " + score[0];
+            else text = "Score: " + score[0] + "                 Score: " + score[1];
+            setImage(new GreenfootImage(text, 18, new Color(255, 255, 255), new Color(0, 0, 0)));
+        }
     }
     
     /**
